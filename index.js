@@ -118,11 +118,11 @@ app.post('/api/users/:_id/exercises', async (req,res) =>{
     if(!exercise) return res.status(400).json({error:"Exercise creation failed"});
     
     res.json({
-      _id:user._id,
       username: user.username,
-      date:exercise.date,
+      description: exercise.description,
       duration:exercise.duration,
-      description: exercise.description
+      date:exercise.date,
+      _id:user._id
     });
 
   }
@@ -160,9 +160,9 @@ app.get('/api/users/:_id/logs',async (req,res) => {
     })); 
 
     res.status(200).json({
-      _id:user._id,
       username: user.username,
       count:formattedLogs.length,
+      _id:user._id,
       log: formattedLogs
     })
   }
