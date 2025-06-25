@@ -30,7 +30,10 @@ const exerciseSchema = new Schema({
   },
   description:String,
   duration:Number,
-  date:String
+  date:{
+    type:Date,
+    default:Date.now
+  }
 });
 const Exercise = mongoose.model('exercise',exerciseSchema);
 
@@ -72,7 +75,7 @@ const addExercise = async (id,description,duration,date) =>{
     const exercise = await Exercise.create({
       userId: user._id,
       date: newDate.toDateString(),
-      duration: duration,
+      duration: Number(duration),
       description: description
     });
     //console.log("Exercise added");
@@ -98,7 +101,7 @@ app.post('/api/users',async (req,res) =>{
 
 app.get('/api/users',async (req,res) =>{
 
-  const users = await User.find({},'username');
+  const users = await User.find({},'_id username');
   res.status(200).json(users);
 
 })
@@ -156,13 +159,13 @@ app.get('/api/users/:_id/logs',async (req,res) => {
     const formattedLogs = exercises.map(ex=>({
       description:ex.description,
       duration:ex.duration,
-      date:new Date(ex.date).toDateString()
+      date:ex.date.toDateString()
     })); 
 
     res.status(200).json({
+      _id:user._id,
       username: user.username,
       count:formattedLogs.length,
-      _id:user._id,
       log: formattedLogs
     })
   }
