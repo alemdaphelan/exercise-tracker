@@ -38,7 +38,6 @@ const exerciseSchema = new Schema({
 const Exercise = mongoose.model('exercise',exerciseSchema);
 
 const addUsers = async (username) =>{  
-  if (!username) return res.status(400).json({ error: "Username is required" });
   try{
     const user = await User.create({username});
     return user;
@@ -87,6 +86,7 @@ const addExercise = async (id,description,duration,date) =>{
 app.post('/api/users',async (req,res) =>{
 
   const { username }= req.body;
+  if (!username) return res.status(400).json({ error: "Username is required" });
   if(username){
     const user = await addUsers(username);
     return res.status(201).json({username:user.username,_id:user._id});
@@ -106,6 +106,9 @@ app.post('/api/users/:_id/exercises', async (req,res) =>{
 
     const {_id} = req.params;
     const {description,duration,date} = req.body;
+    if (!description || !duration || isNaN(duration)) {
+      return res.status(400).json({ error: "Missing or invalid fields" });
+    }
     const user = await User.findById(_id);
 
     if(!user){
