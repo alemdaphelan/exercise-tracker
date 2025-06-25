@@ -38,6 +38,7 @@ const exerciseSchema = new Schema({
 const Exercise = mongoose.model('exercise',exerciseSchema);
 
 const addUsers = async (username) =>{  
+  if (!username) return res.status(400).json({ error: "Username is required" });
   try{
     const user = await User.create({username});
     return user;
@@ -74,7 +75,7 @@ const addExercise = async (id,description,duration,date) =>{
     //create and add exercise into the collection
     const exercise = await Exercise.create({
       userId: user._id,
-      date: newDate.toDateString(),
+      date: newDate,
       duration: Number(duration),
       description: description
     });
@@ -124,7 +125,7 @@ app.post('/api/users/:_id/exercises', async (req,res) =>{
       username: user.username,
       description: exercise.description,
       duration:exercise.duration,
-      date:exercise.date,
+      date:exercise.date.toDateString(),
       _id:user._id
     });
 
