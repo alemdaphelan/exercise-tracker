@@ -161,7 +161,6 @@ app.get('/api/users/:_id/logs',async (req,res) => {
       date:new Date(ex.date).toDateString()
     })); 
 
-    let count = exercises.length;
     res.status(200).json({
       _id:user._id,
       username: user.username,
