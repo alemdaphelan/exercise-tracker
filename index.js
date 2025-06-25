@@ -28,7 +28,6 @@ const exerciseSchema = new Schema({
     ref:'user',
     required: true
   },
-  username:String,
   description:String,
   duration:Number,
   date:String
@@ -72,7 +71,6 @@ const addExercise = async (id,description,duration,date) =>{
     //create and add exercise into the collection
     const exercise = await Exercise.create({
       userId: user._id,
-      username: user.username,
       date: newDate.toDateString(),
       duration: duration,
       description: description
