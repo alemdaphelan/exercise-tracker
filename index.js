@@ -71,11 +71,11 @@ const addExercise = async (id,description,duration,date) =>{
     }
     //create and add exercise into the collection
     const exercise = await Exercise.create({
-      userId:user._id,
+      userId: user._id,
       username: user.username,
-      date:newDate.toDateString(),
-      duration,
-      description
+      date: newDate.toDateString(),
+      duration: duration,
+      description: description
     });
     //console.log("Exercise added");
     return exercise;
