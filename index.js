@@ -100,7 +100,7 @@ app.post('/api/users',async (req,res) =>{
 
 app.get('/api/users',async (req,res) =>{
 
-  const users = await User.find({},'_id username');
+  const users = await User.find({},'username');
   res.status(200).json(users);
 
 })
