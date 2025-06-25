@@ -48,14 +48,8 @@ const addUsers = async (username) =>{
     return null;
   }
 }
-const checkValidDate = (date) =>{
-  try{
-    new Date(date);
-    return true;
-  }catch(err){
-    return false;
-  }
-}
+const checkValidDate = (date) => !isNaN(Date.parse(date));
+
 
 const addExercise = async (id,description,duration,date) =>{
   try{
